@@ -10,14 +10,12 @@ use Log::FileSimple;
 use FileHandle;
 
 
-my $log	= new Log::FileSimple( 	name 	=> 'Log::FileSimple logs',
-								file	=> './log.log',
-								mask	=> -1
+# force autoflush on log file for testing 
+my $log	= new Log::FileSimple( 	name 		=> 'Log::FileSimple logs',
+								file		=> './log.log',
+								mask		=> -1,
+								autoflush 	=> 1,
 							);
-
-# force autoflush on log file
-$log->{fh}->autoflush(1);
-
 
 ok( defined $log,              		'new() returned something' );
 ok( $log->isa('Log::FileSimple'),	'  and it\'s the right class' );

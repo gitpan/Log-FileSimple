@@ -6,9 +6,10 @@ Log::FileSimple - A simple tool to write messages and objects dump to log file.
 
   use Log::FileSimple;
   
-  my $log = new Log::FileSimple(  name    => 'Log::FileSimple logs',
-                                  file    => './log.log',
-                                  mask    => -1
+  my $log = new Log::FileSimple(  name      => 'Log::FileSimple logs',
+                                  file      => './log.log',
+                                  mask      => -1,
+                                  autoflush => 0,
                               );
   my $message;
   
@@ -67,8 +68,9 @@ parameters which you can set here:
 
   $log = new Log::FileSimple(  
                                name    => $name,
-                               [ file    => $file ],
-                               [ mask    => $mask ] 
+                               [ file      => $file ],
+                               [ mask      => $mask ],
+                               [ autoflush => (0|1) ],
                              );
 
 =over 4 
@@ -93,6 +95,11 @@ with this value is zero then message will be discarded.
 If this value is 0 nothing will be logged.
 
 If this value is C<0xFFFF> or -1 all messages will be logged.
+
+=item autoflush
+
+It's a boolean value that enabled or disabled autoflush of data into
+log file. Default value is 0 that is autoflushing data is disabled.
 
 =back
 

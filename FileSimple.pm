@@ -11,7 +11,7 @@ use Carp;
 use FileHandle;
 use Data::Dumper;
 
-$Log::FileSimple::VERSION	= '0.01';
+$Log::FileSimple::VERSION	= '0.02';
 
 
 # Fields that can be set in new method, with defaults
@@ -19,6 +19,7 @@ my %fields =(
 	file 	=> '/tmp/log.log',
 	name	=> undef,
 	mask	=> 0xFFFF,
+	autoflush => 0,
 );
 
 sub new
@@ -38,7 +39,7 @@ sub new
     	die ref($class) . "::new: must specify value for $_" 
     		if (!defined $self->{$_});
     }
-		$self->{mask} = 0xFFFF if ($self->{mask} == -1);
+	$self->{mask} = 0xFFFF if ($self->{mask} == -1);
     bless $self, $class;
     $self->_init;
     return $self;
@@ -47,6 +48,7 @@ sub new
 sub _init {
 	my $self = shift;
 	$self->{fh} = new FileHandle ">>$self->{file}";
+	$self->{fh}->autoflush($self->{autoflush});
 	die "Unable to write to $self->{file}" if (!defined $self->{fh});
 }
 
